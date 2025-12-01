@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>mkv_player.html</title>
+<style>
+body {
+margin: 0;
+background: #000;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+flex-direction: column;
+}
+video {
+max-width: 90vw;
+max-height: 90vh;
+}
+#video-title {
+position: absolute;
+bottom: 40px;
+color: white;
+background: rgba(0, 0, 0, 0.5);
+padding: 6px 12px;
+border-radius: 8px;
+font-size: 14px;
+opacity: 0;
+transition: opacity 1s ease;
+pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+<video id="video" controls autoplay>
+<source src="" type="video/x-matroska">
+</video>
+<div id="video-title"></div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const t = parseInt(urlParams.get('t') || "0", 10);
+const src = urlParams.get('src') || "";
+const video = document.getElementById("video");
+video.src = src;
+video.currentTime = t;
+video.play().catch(() => {}); // 自動再生がブロックされてもエラー抑止
+
+// ファイル名からタイトルを設定
+const fileName = decodeURIComponent(src.split("/").pop());
+document.title = fileName;
+
+// marquee風にタイトルを動かす
+let pos = 0;
+const scrollTitle = " 🎬 " + fileName + " ";
+setInterval(() => {
+document.title = scrollTitle.substring(pos) + scrollTitle.substring(0, pos);
+pos = (pos + 1) % scrollTitle.length;
+}, 300);
+
+// 動画下に3秒間だけタイトルを表示
+const titleDiv = document.getElementById("video-title");
+titleDiv.textContent = fileName;
+setTimeout(() => {
+titleDiv.style.opacity = 1;
+setTimeout(() => {
+titleDiv.style.opacity = 0;
+}, 3000);
+}, 1000);
+</script>
+</body>
+</html>
+

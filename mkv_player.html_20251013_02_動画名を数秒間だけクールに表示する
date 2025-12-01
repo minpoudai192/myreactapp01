@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>mkv_player.html</title>
+</head>
+
+<body style="margin:0;background:#000;display:flex;justify-content:center;align-items:center;height:100vh;">
+
+    <video id="video" controls autoplay style="max-width:90vw; max-height:90vh;">
+        <source src="" type="video/x-matroska">
+    </video>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const t = parseInt(urlParams.get('t') || "0", 10);
+        const src = urlParams.get('src') || "";
+        const video = document.getElementById("video");
+        video.src = src;
+        video.currentTime = t;
+        video.play();
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const src = params.get("src");
+            if (src) {
+                // ファイル名部分だけ抽出（URLの最後の / 以降）
+                const fileName = decodeURIComponent(src.split("/").pop());
+                document.title = fileName;
+            }
+        });
+    </script>
+</body>
+</html>
+

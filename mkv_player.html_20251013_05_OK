@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>mkv_player.html</title>
+    <style>
+        body {
+        margin: 0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        }
+
+        video {
+        max-width: 90vw;
+        max-height: 90vh;
+        }
+
+        /* 下部に一時的に出す動画タイトル */
+        #video-title {
+            position: fixed;
+            bottom: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        #video-title.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="video" controls autoplay>
+        <source src="" type="video/x-matroska">
+    </video>
+
+    <!-- タイトル表示用 -->
+    <div id="video-title"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const t = parseInt(urlParams.get('t') || "0", 10);
+            const src = urlParams.get('src') || "";
+            const video = document.getElementById("video");
+            const titleDiv = document.getElementById("video-title");
+
+            if (src) {
+                video.src = src;
+                video.currentTime = t;
+                video.play();
+
+                // ファイル名を抽出（URLの最後の / 以降）
+                const fileName = decodeURIComponent(src.split("/").pop());
+                const baseName = fileName.replace(/\.[^/.]+$/, ""); // 拡張子除去
+                document.title = baseName;
+
+                // 下にタイトルを一時表示
+                titleDiv.textContent = baseName;
+                titleDiv.classList.add("show");
+
+                // 3秒後にフェードアウト
+                // 6秒後にフェードアウト
+                setTimeout(() => {
+                    titleDiv.classList.remove("show");
+                }, 6000);
+            }
+        });
+    </script>
+</body>
+</html>
+
