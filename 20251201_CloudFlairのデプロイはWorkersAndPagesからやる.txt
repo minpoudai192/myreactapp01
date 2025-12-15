@@ -1,0 +1,4 @@
+Workers and Pages 
+デプロイ画面
+githubの直近のgit push（アップロード）が見えてるはず
+対象のpushの右の…からデプロイ実行する

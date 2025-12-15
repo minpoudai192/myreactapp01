@@ -1,0 +1,15 @@
+cdd
+cd myreactapp0
+myreactapp01/         myreactapp01GitPages/ myreactapp02/
+
+cd myreactapp01GitPages
+cp -r ~/Desktop/myreactapp01/frontend/build/*  .
+
+git add .
+git commit -m "Github Pages 公開用N"
+git push
+
+minpoudai192@hotmail.co.jp
+
+myGithubPages-pbcopy 
+

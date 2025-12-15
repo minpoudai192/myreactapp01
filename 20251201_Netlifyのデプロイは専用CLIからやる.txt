@@ -1,0 +1,2 @@
+netlify cli
+alias mynetlifyNetifyUpdate='cd "/home/pi/Desktop/myreactapp01/frontend" && pwd && echo "https://stk-reactapp01.netlify.app" && echo "netlify deploy --dir=build --prod"'
